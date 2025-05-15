@@ -1,0 +1,44 @@
+<!-- omnibot.launch -->
+
+<launch>
+	<!-- Argument for serial port -->
+	<arg name="port" default="/dev/ttyACM0" />
+
+	<!-- ROSSerial for communication with OpenCR -->
+	<node name= "rosserial_node" pkg="rosserial_arduino"  type="serial_node.py" output="screen">
+		<param name="port" value="$(arg port)" />
+		<param name="baud" value="2000000" />
+	</node>
+	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" output="screen">
+        <rosparam file="$(find omnibot_control)/config/ekf_config.yaml" command="load"/>
+    </node>
+	
+	<node pkg="tf2_ros" type="static_transform_publisher" name="basetoimu"
+	args=".1 -0.12  .3 0 0 1 base_link imu_link" />
+
+	<param name="kp_x" type="double" value="1.1" />
+	<param name="ki_x" type="double" value="0.0005" />
+	<param name="kd_x" type="double" value="0.001" />
+
+	<!-- PID parameters for y-axis -->
+	<param name="kp_y" type="double" value="1.1" />
+	<param name="ki_y" type="double" value="0.0005" />
+	<param name="kd_y" type="double" value="0.001" />
+
+	<!-- PID parameters for theta -->
+	<param name="kp_theta" type="double" value="1.0" />
+	<param name="ki_theta" type="double" value="0.0001" /> 
+	<param name="kd_theta" type="double" value="0.01" />
+ 
+
+	 
+	<node name="omni_wheel_ik" pkg="omnibot_control" type="omni_wheel_ik_node" output="screen"/>
+	<node name="pose_estimation" pkg="omnibot_control" type="pose_estimation_node" output="screen" />
+	<node name="pose_controller" pkg="omnibot_control" type="pose_controller_node" output="screen"/>
+	<node pkg="waypoint_follower_cpp" type="waypoint_state_machine" name="waypoint_state_machine" output="screen" />
+	<node name="logger" pkg="omnibot_control" type="odom_logger" output="screen"/>
+
+
+
+
+</launch>

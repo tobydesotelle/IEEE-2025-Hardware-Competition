@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/catkin_ws/devel
+
+Name: omni_wheel_ik
+Description: Description of omni_wheel_ik
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

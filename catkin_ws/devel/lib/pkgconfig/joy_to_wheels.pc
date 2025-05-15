@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/catkin_ws/devel
+
+Name: joy_to_wheels
+Description: Description of joy_to_wheels
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

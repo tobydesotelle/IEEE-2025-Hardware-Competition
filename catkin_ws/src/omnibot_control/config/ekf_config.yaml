@@ -1,0 +1,69 @@
+frequency: 30   # The filter's update frequency in Hz
+
+sensor_timeout: 0.5  # Maximum allowed delay for incoming sensor messages
+
+two_d_mode: true  # Set true for planar movement (e.g., ground robots)
+
+transform_time_offset: 0.0  # Time offset for the transforms
+
+# Define frame IDs
+#map_frame: map
+#odom_frame: odom
+#base_link_frame: base_link
+#world_frame: odom  # Usually 'map' or 'odom'
+
+# Initial state estimation (Optional)
+# initial_state: [x, y, z, roll, pitch, yaw, x_dot, y_dot, z_dot, roll_dot, pitch_dot, yaw_dot, x_accel, y_accel, z_accel]
+
+# Configure your sensors
+odom0: /odom
+odom0_config: [true, true, false,
+               false, false, true,
+               true,  true,  false,
+               false, false, true,
+               false, false, false]
+odom0_differential: false
+odom0_relative: false
+odom0_queue_size: 20
+odom0_initial_covariance: [
+  0.01, 0,    0,    0,    0,    0,
+  0,    0.01, 0,    0,    0,    0,
+  0,    0,    0,    0,    0,    0,
+  0,    0,    0,    10, 0,    0,
+  0,    0,    0,    0,    0.01, 0,
+  0,    0,    0,    0,    0,    0.01
+]
+
+imu0: /imu/data
+imu0_config: [false, false, false,
+              false,  false,  true,
+              false, false, false,
+              false,  false,  false,
+              false, false, false]
+imu0_differential: false
+imu0_relative: false
+imu0_nodelay: false  
+imu0_queue_size: 10
+imu0_remove_gravitational_acceleration: true
+imu0_correction_max_thresh: 0.5
+imu0_initial_covariance: [999, 999, 999,
+                          0.5, 0.5, 0.1,
+                          999, 999, 999,
+                          0.5, 0.5, 1.0,
+                          0.1, 0.1, 0.1]
+                          
+mag0: /imu/mag
+mag0_config: [false, false, false,
+              true, true, true,
+              false, false, false,
+              false, false, false,
+              false, false, false]
+mag0_differential: false
+mag0_relative: true
+mag0_queue_size: 10
+mag0_nodelay: false
+mag0_initial_covariance: [999, 999, 999,
+                          0.1, 0.1, 0.1,
+                          999, 999, 999,
+                          999, 999, 999,
+                          999, 999, 999] 
